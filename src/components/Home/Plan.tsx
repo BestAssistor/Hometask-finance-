@@ -4,22 +4,28 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
-import LegalForm from './BadgeComponent';
+import BadgeComponent from './BadgeComponent';
 
-const Plan: React.FC<{
+type PlanPropTypes = {
     title: string;
     legalForm: string;
     toVat: string;
     id: number;
     cDate: string;
     uDate: string;
-}> = ({
+    onDeleteClick: () => void;
+    onEditClick: () => void;
+}
+
+const Plan: React.FC<PlanPropTypes> = ({
     title,
     legalForm,
     toVat,
     id,
     cDate,
     uDate,
+    onDeleteClick,
+    onEditClick
 }) => {
     return (
         <>
@@ -34,8 +40,8 @@ const Plan: React.FC<{
                             marginTop: '10px',
                         }}
                     >
-                        <EditIcon style={{color: '#000'}} className="me-sm-3" data-id={id} />
-                        <DeleteIcon style={{color:'#e00606'}} data-id={id} />
+                        <EditIcon style={{color: '#000', cursor: 'pointer'}} className="me-sm-3" data-id={id} onClick={onEditClick} />
+                        <DeleteIcon style={{color:'#e00606', cursor: 'pointer'}} data-id={id} onClick={onDeleteClick}/>
                     </Grid>
                 </Container>
             </Box>
@@ -53,7 +59,7 @@ const Plan: React.FC<{
                         <h3>{ title }</h3>
                         <p>Created Date: <b>{ cDate }</b></p>
                         <p>Updated Date: <b>{ uDate }</b></p>
-                        <LegalForm
+                        <BadgeComponent
                             legal={ legalForm }
                             vat={ toVat }                       
                         />

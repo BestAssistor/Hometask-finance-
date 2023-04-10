@@ -1,18 +1,23 @@
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import React from 'react';
 
 type LegalFormToProps = {
     legal: string;
     vat: string;
 };
 
-export default function LegalForm(props: LegalFormToProps) {
+const LegalForm: React.FC<LegalFormToProps> = (props) => {
+    const {legal, vat} = props
+
     return (
         <>
             <Stack direction="row" spacing={1} sx={{marginTop: '1rem'}}>
-                <Chip label={props.legal} size="small" color="success" />
-                <Chip label={props.vat} size="small" color="info" />
+                <Chip label={legal} size="small" color="success" />
+                <Chip label={vat} size="small" color="info" />
             </Stack>
         </>
     )
 };
+
+export default LegalForm

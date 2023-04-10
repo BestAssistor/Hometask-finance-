@@ -3,7 +3,6 @@
   font-size: 13px;
 }
 
-
 .grid-wrapper{
   --auto-grid-min-size: 16rem;
   display: grid;
@@ -12,19 +11,34 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-font-family: 'Montserrat', sans-serif;
-
+  font-family: 'Montserrat', sans-serif;
 }
+
 .grid-wrapper li{
   color: #000;
   list-style-type: none;
   text-align: center;
   text-transform: capitalize;
   font-weight: 600;
-  cursor: pointer;
 }
+
 .main-container{
   width: 92%;
   margin: 0 auto;
   padding:2rem 0rem;
+}
+
+.new-card {
+  position: relative;
+  border: 3px grey dashed;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 800px) {
+  .logo-img {
+    width: 170px !important;
+  }
+  .css-2m1m42-MuiGrid-root {
+    width: 100% !important;
+  }
 }

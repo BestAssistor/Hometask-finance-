@@ -1,21 +1,22 @@
 import * as React from 'react';
-import  { ReactNode } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
+import {
+    AppBar,
+    Box,
+    Toolbar,
+    IconButton,
+    Typography,
+    Menu,
+    Container,
+    Avatar,
+    Tooltip,
+    MenuItem,
+} from '@mui/material';
 
 import LogoImg from '../../assets/imgs/logo.png';
 
 const settings = ['Logout'];
 type Props = {
-    children: ReactNode[];
+    children: React.ReactNode;
   }
 
 function Layout({children}: Props) {
@@ -78,7 +79,7 @@ function Layout({children}: Props) {
                                 textDecoration: 'none',
                             }}
                         >
-                            <img alt="logo" src={LogoImg} />
+                            <img alt="logo" src={LogoImg} className="logo-img" />
                         </Typography>
 
                         <Box sx={{ flexGrow: 0 }}>

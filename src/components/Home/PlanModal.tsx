@@ -1,16 +1,25 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Modal from '@mui/material/Modal';
-import Button from '@mui/material/Button';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import Radio from '@mui/material/Radio';
-import InputLabel from '@mui/material/InputLabel';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
+import {
+    Box,
+    Grid,
+    Modal,
+    Button,
+    Select,
+    MenuItem,
+    Radio,
+    InputLabel,
+    RadioGroup,
+    FormControlLabel,
+    Typography,
+    TextField,
+    Stack,
+    Alert,
+    AlertTitle,
+} from '@mui/material';
+
+import { SelectChangeEvent } from '@mui/material/Select';
+
+import { planValidation } from '../../validation';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -24,50 +33,79 @@ const style = {
     p: 4,
 };
 
+export type PlanType = {
+    fileName: string;
+    legalForm: string;
+    toVat: string
+}
+
 type KeepMountedModalPropType = {
+    type: string;
     status: boolean;
+    fileName?: string;
+    legalForm?: string;
+    toVat?: string;
+    defaultValue?: PlanType;
     onChange: (e: any) => void;
     passValue: (e: any) => void;
 };
 
 
-export default function KeepMountedModal(props: KeepMountedModalPropType) {
-    const legalForm = [
-        'Company',
-        'Freelance',
-        'ASBL',
-    ];
-
-    const [plan, setPlan] = React.useState({
-        'fileName': null,
-        'legalForm': null,
-        'toVat': null,
+const KeepMountedModal:React.FC<KeepMountedModalPropType> = (props) => {
+    const legalForm = ['Company', 'Freelance', 'ASBL'];
+    const [plan, setPlan] = React.useState<PlanType>({
+        fileName: "",
+        legalForm: "",
+        toVat: ""
     });
+
+    const [error, setError] = React.useState<string[]>([]);
+
+    React.useEffect(() => {
+        props.defaultValue && setPlan(props.defaultValue)
+    }, [props.defaultValue]);
 
     const handleClose = () => {
         props.onChange(false);
     };
 
-    const onChange = (e: any) => {
-        setPlan({...plan, [e.target.name]: e.target.value});
+    const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
+        setPlan({...plan, [e.target.name as string]: e.target.value});
     }
 
     const onSubmit = () => {
+        const errors = planValidation(plan);
+        if(errors.length > 0) {
+            return setError(errors);
+        }
         props.passValue(plan);
+        setPlan({
+            fileName: '',
+            legalForm: '',
+            toVat: '',
+        });
+        setError([]);
+        props.onChange(false);
     }
-    console.log(plan)
 
     return (
         <Modal
             keepMounted
             open={props.status}
             onClose={handleClose}
-            aria-labelledby="keep-mounted-modal-title"
-            aria-describedby="keep-mounted-modal-description"
         >
             <Box sx={style}>
+                <Stack sx={{ width: '100%' }} spacing={2}>
+                    {error.map((err, index) => {
+                        return (
+                            <>
+                                <Alert key={index + err} severity="error">{err}</Alert>
+                            </>
+                        );
+                    })}
+                </Stack>
                 <Typography id="keep-mounted-modal-title" variant="h5" component="h2">
-                    Create New Financial Plan
+                    {props.type === "create" ? 'Create New Financial Plan' : 'Update Financial Plan'}
                 </Typography>
                 <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
                     <Box
@@ -83,6 +121,7 @@ export default function KeepMountedModal(props: KeepMountedModalPropType) {
                             variant="outlined"
                             size='small'
                             onChange={onChange}
+                            value={plan.fileName}
                         />
                     </Box>
                     <Box
@@ -96,16 +135,16 @@ export default function KeepMountedModal(props: KeepMountedModalPropType) {
                             id="demo-select-small"
                             label="Age"
                             name="legalForm"
-                            defaultValue="none"
                             size='small'
                             onChange={onChange}
+                            value={plan.legalForm}
                         >
                             <MenuItem value="none">
                                 Select option
                             </MenuItem>
                             {
                                 legalForm.map((legal, index) => {
-                                    return <MenuItem key={index} value={index}>{legal}</MenuItem>
+                                    return <MenuItem key={legal + index} value={legal}>{legal}</MenuItem>
                                 })
                             }
                         </Select>
@@ -115,8 +154,9 @@ export default function KeepMountedModal(props: KeepMountedModalPropType) {
                         <RadioGroup
                             row
                             aria-labelledby="demo-radio-buttons-group-label"
-                            name="radio-buttons-group"
+                            name="toVat"
                             onChange={onChange}
+                            value={plan.toVat}
                         >
                             <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                             <FormControlLabel value="No" control={<Radio />} label="No" />
@@ -131,7 +171,9 @@ export default function KeepMountedModal(props: KeepMountedModalPropType) {
                                 justifyContent: 'flex-end',
                             }}
                         >
-                            <Button variant="contained" color="success" onClick={onSubmit}>Create</Button>
+                            <Button variant="contained" color="success" onClick={onSubmit}>
+                                {props.type === 'create' ? 'Create' : 'Save'}
+                            </Button>
                             <Button variant="contained" color="error" onClick={handleClose}>Cancel</Button>
                         </Grid>
                     </Box>
@@ -140,3 +182,5 @@ export default function KeepMountedModal(props: KeepMountedModalPropType) {
         </Modal>
     );
 }
+
+export default KeepMountedModal
