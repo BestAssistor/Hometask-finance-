@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "fileName": "12313",
+        "legalForm": "Company",
+        "toVat": "Yes",
+        "createdDate": "2023-04-12",
+        "updatedDate": "2023-04-15"
+    },
+    {
+        "id": 2,
+        "fileName": "sdfsdfsf",
+        "legalForm": "Freelance",
+        "toVat": "No",
+        "createdDate": "2023-06-15",
+        "updatedDate": "2023-04-15"
+    },
+    {
+        "id": 3,
+        "fileName": "wsewerw",
+        "legalForm": "ASBL",
+        "toVat": "Yes",
+        "createdDate": "2023-04-15",
+        "updatedDate": "2023-04-15"
+    }
+]
