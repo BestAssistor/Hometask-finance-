@@ -34,11 +34,27 @@
   cursor: pointer;
 }
 
-@media only screen and (max-width: 800px) {
+.new-card:hover {
+  background-color: #13131329;
+  transition: .5s;
+}
+
+@media only screen and (max-width: 900px) {
   .logo-img {
     width: 170px !important;
   }
   .css-2m1m42-MuiGrid-root {
     width: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .new-card {
+    display: none;
+  }
+
+  .user-detail {
+    flex-basis: 100% !important;
+    max-width: 100% !important;
   }
 }
