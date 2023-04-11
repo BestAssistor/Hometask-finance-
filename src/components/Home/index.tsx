@@ -84,8 +84,8 @@ const Home = () => {
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!',
+      confirmButtonText: 'Sure',
+      cancelButtonText: 'No',
     }).then(result => {
       if (result.value) {
         setPlan(prevPlan => prevPlan.filter((_, i) => i !== index))

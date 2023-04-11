@@ -135,9 +135,6 @@ const KeepMountedModal:React.FC<KeepMountedModalPropType> = (props) => {
                 onChange={onChange}
                 value={plan.legalForm}
               >
-                <MenuItem value="none">
-                  Select option
-                </MenuItem>
                 {
                   legalForm.map((legal, index) => {
                     return <MenuItem key={legal + index} value={legal}>{legal}</MenuItem>
