@@ -164,7 +164,7 @@ const KeepMountedModal:React.FC<KeepMountedModalPropType> = (props) => {
                   justifyContent: 'flex-end',
                 }}
               >
-                <Button variant="contained" color="success" onClick={onSubmit}>
+                <Button variant="contained" color="success" onClick={onSubmit} sx={{marginRight: '20px'}}>
                   {props.type === 'create' ? 'Create' : 'Save'}
                 </Button>
                 <Button variant="contained" color="error" onClick={handleClose}>Cancel</Button>
